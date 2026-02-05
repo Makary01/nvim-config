@@ -8,6 +8,7 @@ return {
 			integrations = {
 				telescope = true,
 				cmp = false,
+                oil = true,
 			}
 		})
 
