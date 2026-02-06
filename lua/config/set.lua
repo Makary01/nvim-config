@@ -20,3 +20,8 @@ vim.opt.incsearch = true
 vim.opt.scrolloff = 8
 
 vim.o.splitright = true
+
+-- diagnostics at the end of line
+vim.diagnostic.config {
+    virtual_text = true,
+}
