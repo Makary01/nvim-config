@@ -21,7 +21,29 @@ vim.opt.scrolloff = 8
 
 vim.o.splitright = true
 
--- diagnostics at the end of line
+vim.o.mouse = 'a'
+
+vim.o.undofile = true
+
+-- Diagnostic Config & Keymaps
+-- See :help vim.diagnostic.Opts
 vim.diagnostic.config {
+    update_in_insert = false,
+    severity_sort = true,
+    float = { border = 'rounded', source = 'if_many' },
+    underline = { severity = vim.diagnostic.severity.ERROR },
+
     virtual_text = true,
+
+    -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+    jump = { float = true },
 }
+
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- highligh yanked text
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+})
