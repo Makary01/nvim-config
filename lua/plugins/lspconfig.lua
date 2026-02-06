@@ -53,5 +53,9 @@ return {
             end,
         })
         vim.lsp.enable('lua_ls')
+
+        vim.lsp.enable('gopls', {
+            capabilities = blink_cmp_capabilities
+        })
     end
 }
