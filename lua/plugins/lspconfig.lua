@@ -1,7 +1,15 @@
 return {
     "neovim/nvim-lspconfig",
+    dependencies = {
+        'mason-org/mason.nvim',
+        'saghen/blink.cmp'
+    },
     config = function()
+        local blink_cmp_capabilities = require('blink-cmp').get_lsp_capabilities()
+
         vim.lsp.config('lua_ls', {
+            capabilities = blink_cmp_capabilities,
+
             on_init = function(client)
                 if client.workspace_folders then
                     local path = client.workspace_folders[1].name

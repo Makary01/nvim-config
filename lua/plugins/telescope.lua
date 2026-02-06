@@ -1,16 +1,18 @@
 return {
-  'nvim-telescope/telescope.nvim',
-  version = '*',
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-  },
+    'nvim-telescope/telescope.nvim',
+    version = '*',
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
 
-  config = function()
-    local builtin = require('telescope.builtin')
+    config = function()
+        local builtin = require('telescope.builtin')
 
-    vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = 'Telescope find files' })
-    vim.keymap.set('n', '<C-p>', builtin.oldfiles, { desc = 'Telescope old files' })
-    vim.keymap.set('n', '<leader>ff', builtin.live_grep, { desc = 'Telescope live grep' })
-  end,
+        vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = 'Telescope find files' })
+        vim.keymap.set('n', '<C-p>', function()
+            builtin.oldfiles({ only_cwd = true })
+        end, { desc = 'Telescope old files' })
+        vim.keymap.set('n', '<leader>ff', builtin.live_grep, { desc = 'Telescope live grep' })
+    end,
 }
