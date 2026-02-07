@@ -39,8 +39,6 @@ vim.diagnostic.config {
     jump = { float = true },
 }
 
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
 -- highligh yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
