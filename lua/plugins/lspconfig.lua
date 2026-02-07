@@ -2,13 +2,13 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
         'mason-org/mason.nvim',
-        'saghen/blink.cmp'
+        'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
-        local blink_cmp_capabilities = require('blink-cmp').get_lsp_capabilities()
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
         vim.lsp.config('lua_ls', {
-            capabilities = blink_cmp_capabilities,
+            capabilities = capabilities,
 
             on_init = function(client)
                 if client.workspace_folders then
@@ -55,7 +55,7 @@ return {
         vim.lsp.enable('lua_ls')
 
         vim.lsp.enable('gopls', {
-            capabilities = blink_cmp_capabilities
+            capabilities = capabilities
         })
     end
 }
