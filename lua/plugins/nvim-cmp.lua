@@ -14,6 +14,9 @@ return {
                 'rafamadriz/friendly-snippets',
                 config = function()
                     require('luasnip.loaders.from_vscode').lazy_load()
+                    require('luasnip.loaders.from_lua').lazy_load({
+                        paths = "~/.config/nvim/lua/snippets/"
+                    })
                 end,
             },
         },
@@ -67,21 +70,53 @@ return {
             },
 
             sources = {
-                { name = 'nvim_lsp', label = 'LSP' },
                 { name = 'luasnip',  label = 'Snip' },
+                { name = 'nvim_lsp', label = 'LSP' },
                 { name = 'buffer',   label = 'Buf' },
                 { name = 'path',     label = 'Path' },
             },
 
             formatting = {
-                fields = { 'abbr', 'menu' },
+                fields = { 'abbr', 'icon', 'kind', 'menu' },
                 format = function(entry, item)
+                    local kind_icons = {
+                        Text = "󰉿",
+                        Method = "󰆧",
+                        Function = "󰊕",
+                        Constructor = "",
+                        Field = "󰜢",
+                        Variable = "󰀫",
+                        Class = "󰠱",
+                        Interface = "",
+                        Module = "",
+                        Property = "󰜢",
+                        Unit = "󰑭",
+                        Value = "󰎠",
+                        Enum = "",
+                        Keyword = "󰌋",
+                        Snippet = "",
+                        Color = "󰏘",
+                        File = "󰈙",
+                        Reference = "󰈇",
+                        Folder = "󰉋",
+                        EnumMember = "",
+                        Constant = "󰏿",
+                        Struct = "󰙅",
+                        Event = "",
+                        Operator = "󰆕",
+                        TypeParameter = "",
+                    }
+
+                    -- icon + kind name
+                    item.kind = string.format("%s %s", kind_icons[item.kind] or "", item.kind)
+
                     item.menu = ({
                         nvim_lsp = '[LSP]',
-                        luasnip  = '[Snip]',
+                        luasnip  = '[LuaSnip]',
                         buffer   = '[Buf]',
                         path     = '[Path]',
                     })[entry.source.name]
+
                     return item
                 end,
             },
