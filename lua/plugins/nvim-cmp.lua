@@ -64,10 +64,10 @@ return {
                 end, { 'i', 's' })
             },
 
-            window = {
-                completion = cmp.config.window.bordered(),
-                documentation = cmp.config.window.bordered(),
-            },
+            -- window = {
+            --     completion = cmp.config.window.bordered(),
+            --     documentation = cmp.config.window.bordered(),
+            -- },
 
             sources = {
                 { name = 'luasnip',  label = 'Snip' },
@@ -111,8 +111,8 @@ return {
                     item.kind = string.format("%s %s", kind_icons[item.kind] or "", item.kind)
 
                     item.menu = ({
-                        nvim_lsp = '[LSP]',
                         luasnip  = '[LuaSnip]',
+                        nvim_lsp = '[LSP]',
                         buffer   = '[Buf]',
                         path     = '[Path]',
                     })[entry.source.name]

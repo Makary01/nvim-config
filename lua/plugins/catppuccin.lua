@@ -5,11 +5,7 @@ return {
     config = function()
         require("catppuccin").setup({
             transparent_background = false,
-            integrations = {
-                telescope = true,
-                cmp = true,
-                oil = true,
-            }
+            auto_integrations = true
         })
 
         vim.cmd.colorscheme("catppuccin-mocha")

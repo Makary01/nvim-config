@@ -57,5 +57,13 @@ return {
         vim.lsp.enable('gopls', {
             capabilities = capabilities
         })
+
+        vim.lsp.enable('ts_ls', {
+            capabilities = capabilities,
+        })
+
+        vim.lsp.config('html', {
+            capabilities = capabilities,
+        })
     end
 }
