@@ -78,5 +78,29 @@ return {
         vim.lsp.config('html', {
             capabilities = capabilities,
         })
+
+        vim.lsp.config('apex_ls', {
+            capabilities = capabilities,
+            apex_jar_path = vim.fn.stdpath('data') .. '/mason/share/apex-language-server/apex-jorje-lsp.jar',
+        })
+
+        vim.filetype.add({
+            pattern = {
+                ['.*/*.cls'] = 'apex',
+            },
+        })
+        vim.lsp.enable('apex_ls')
+
+        vim.lsp.config('lwc_ls', {
+            capabilities = capabilities,
+            cmd = {
+                'node',
+                '/home/linuxbrew/.linuxbrew/lib/node_modules/@salesforce/lwc-language-server/bin/lwc-language-server.js',
+                '--stdio'
+            },
+            filetypes = { 'html', 'javascript' },
+        })
+
+        vim.lsp.enable('lwc_ls')
     end
 }

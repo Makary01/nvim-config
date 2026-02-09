@@ -13,7 +13,11 @@ return { -- Highlight, edit, and navigate code
             'query',
             'vim',
             'vimdoc',
-            'go'
+            'go',
+            'apex',
+            'sflog',
+            'soql',
+            'sosl',
         }
         require('nvim-treesitter').install(filetypes)
         vim.api.nvim_create_autocmd('FileType', {
