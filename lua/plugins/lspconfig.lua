@@ -5,8 +5,6 @@ return {
         'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
-        local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
         vim.lsp.config('lua_ls', {
             capabilities = capabilities,
 
@@ -91,16 +89,41 @@ return {
         })
         vim.lsp.enable('apex_ls')
 
+        -- Filter function to strip invalid diagnostics
+        local function filter_lwc_diagnostics(err, result, ctx, config)
+            if result and result.diagnostics then
+                local valid_diagnostics = {}
+                for _, d in ipairs(result.diagnostics) do
+                    if d.range 
+                        and d.range.start and d.range.start.line 
+                        and d.range['end'] and d.range['end'].line then
+                        table.insert(valid_diagnostics, d)
+                    else
+                        -- print to :messages so you know it's happening
+                        vim.notify("Ignored malformed LWC diagnostic", vim.log.levels.WARN)
+                    end
+                end
+                result.diagnostics = valid_diagnostics
+            end
+
+            -- Call the default Neovim handler with the sanitized data
+            vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+        end
+
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+        local mason_bin = vim.fn.stdpath("data") .. "/mason/bin/lwc-language-server"
+
         vim.lsp.config('lwc_ls', {
             capabilities = capabilities,
-            cmd = {
-                'node',
-                '/home/linuxbrew/.linuxbrew/lib/node_modules/@salesforce/lwc-language-server/bin/lwc-language-server.js',
-                '--stdio'
-            },
+            cmd = { mason_bin, '--stdio' },
             filetypes = { 'html', 'javascript' },
+            init_options = { embeddedLanguages = { javascript = true } },
+            handlers = {
+                ["textDocument/publishDiagnostics"] = filter_lwc_diagnostics
+            },
         })
-
         vim.lsp.enable('lwc_ls')
+
     end
 }
